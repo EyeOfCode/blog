@@ -110,6 +110,6 @@ class BlogController extends Controller
             $comment->delete();
         }
         $blog->delete();
-        return redirect('/');
+        return redirect()->back();
     }
 }

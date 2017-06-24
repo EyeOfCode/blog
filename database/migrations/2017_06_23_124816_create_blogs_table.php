@@ -18,7 +18,7 @@ class CreateBlogsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->text('title');
-            $table->text('detail');
+            $table->longText('detail');
             $table->timestamps();
         });
     }

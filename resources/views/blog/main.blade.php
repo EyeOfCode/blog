@@ -1,6 +1,16 @@
 @extends('layout.main')
+@section('header')
+    <style type="text/css">
+        .panel-body {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+@endsection
 
 @section('content')
+    <h2 class="form-signin-heading">Home</h2>
     @if(Auth::check())
         <div class="col-md-12">
             <button type="button" class="btn btn-primary" onclick="window.location.href='/blog/create'">
@@ -28,11 +38,11 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="DELETE">
                             <a href="/blog/{{$blog->id}}/edit">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span>
                             </a>
                             &nbsp;/&nbsp;
-                            <a href="#" onclick="document.getElementById('delete{{$blog->id}}').submit()">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            <a href="#" onclick="return checkDelete('{{$blog->id}}')">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true">Delete</span>
                             </a>
                         </form>
                     @endif
@@ -43,4 +53,14 @@
     <div class="col-md-12" align="right">
         {{ $blogs->links() }}
     </div>
+@endsection
+
+@section('footer')
+    <script type="text/javascript">
+        function checkDelete($id) {
+            if (confirm('Are you sure?')) {
+                document.getElementById('delete' + $id).submit();
+            }
+        }
+    </script>
 @endsection

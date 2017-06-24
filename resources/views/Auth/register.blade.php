@@ -4,6 +4,7 @@
     <div style="width:50%;margin:auto;">
         <form method="post" action="/register">
             {{ csrf_field() }}
+            <h2 class="form-signin-heading">Register</h2>
             <div class="form-group">
                 <label for="Name">Name</label>
                 <input type="text" class="form-control" id="Name" name="name" placeholder="Name" required autofocus>

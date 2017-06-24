@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+    <h2 class="form-signin-heading">Edit</h2>
     <div class="panel panel-info">
         <div class="panel-body">
             <form method="post" action="/blog/{{$blog->id}}">

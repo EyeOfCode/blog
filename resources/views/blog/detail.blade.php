@@ -1,6 +1,14 @@
 @extends('layout.main')
 @section('header')
-    <style>
+    <style type="text/css">
+        .panel-heading {
+            word-wrap: break-word;
+        }
+
+        .panel-body {
+            word-wrap: break-word;
+        }
+
         img {
             max-width: 100%;
             height: auto;
@@ -32,17 +40,9 @@
                 <b>Last updated:</b>{{$blog->updated_at}}
                 @if(Auth::check() && $blog->user->id == Auth::User()->id)
                     <div align="right">
-                        <form id="delete{{$blog->id}}" method="post" action="/blog/{{$blog->id}}">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="_method" value="DELETE">
-                            <a href="/blog/{{$blog->id}}/edit">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                            &nbsp;/&nbsp;
-                            <a href="#" onclick="document.getElementById('delete{{$blog->id}}').submit()">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
-                        </form>
+                        <a href="/blog/{{$blog->id}}/edit">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span>
+                        </a>
                     </div>
                 @endif
             </div>
@@ -104,21 +104,31 @@
                             <b>Comment By:</b>{{$comment->user->name}}
                         </div>
                         <div align="right">
-                                <b>Created on:</b>{{$comment->created_at}}
-                                <b>Last updated:</b>{{$comment->updated_at}}
-                        @if(Auth::check() && Auth::User()->id == $comment->user_id)
+                            <b>Created on:</b>{{$comment->created_at}}
+                            <b>Last updated:</b>{{$comment->updated_at}}
+                            @if(Auth::check() && Auth::User()->id == $comment->user_id)
                                 <form id="delete{{$comment->id}}" method="post" action="/blog/{{$comment->id}}/comment">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
-                                    <a href="#" onclick="document.getElementById('delete{{$comment->id}}').submit()">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    <a href="#" onclick="return checkDelete('{{$comment->id}}')">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true">Delete</span>
                                     </a>
                                 </form>
-                        @endif
+                            @endif
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
+@endsection
+
+@section('footer')
+    <script type="text/javascript">
+        function checkDelete($id) {
+            if (confirm('Are you sure?')) {
+                document.getElementById('delete' + $id).submit();
+            }
+        }
+    </script>
 @endsection

@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('blog_id')->unsigned();
             $table->foreign('blog_id')->references('id')->on('blogs');
-            $table->text('detail');
+            $table->longText('detail');
             $table->timestamps();
         });
     }
