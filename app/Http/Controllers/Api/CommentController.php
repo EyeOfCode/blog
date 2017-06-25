@@ -11,15 +11,17 @@ class CommentController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $this->validate($request, [
-            'detail' => 'Required',
-        ]);
+        if (Auth::check()) {
+            $this->validate($request, [
+                'detail' => 'Required',
+            ]);
 
-        $comment = new Comment();
-        $comment->detail = $request->input('detail');
-        $comment->blog_id = $id;
-        $comment->user_id = Auth::User()->id;
-        $comment->save();
+            $comment = new Comment();
+            $comment->detail = $request->input('detail');
+            $comment->blog_id = $id;
+            $comment->user_id = Auth::User()->id;
+            $comment->save();
+        }
         return redirect()->back();
     }
 

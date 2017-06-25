@@ -27,7 +27,11 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        if(Auth::check()) {
+            return view('blog.create');
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
@@ -71,8 +75,12 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::find($id);
-        return view('blog.edit', compact('blog'));
+        if(Auth::check()) {
+            $blog = Blog::find($id);
+            return view('blog.edit', compact('blog'));
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
